@@ -2,9 +2,6 @@
 
 export default function Home() {
   return (
-    <div className="relative h-screen w-full bg-[url(/images/hero.jpg)]]">
-      
-     merhanba
-    </div>
+    <div className="bg-[url(/images/hero.jpg)] relative h-screen w-full bg-no-repeat bg-fixed bg-center"> merhaba </div>
   );
 }
