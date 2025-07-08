@@ -8,6 +8,7 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 function classNames(...classes) {
@@ -16,6 +17,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
 
+  const currentUser = {displayName: 'fatih senyigit'}
   const [showBG, setShowBG] = useState(false)
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll)
   
-    return () => {
+    return () => { 
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
@@ -38,11 +40,20 @@ export default function Navbar() {
 
   return (
     <Disclosure as="nav" className="text-white fixed top-0 z-20 w-full">
-      <div className={`px-4 md:px-16 py-6 transition duration-500 ${showBG ? ' bg-zinc-900 bg-opacity-75' : ''}`}>
+      <div
+        className={`px-4 md:px-16 py-6 transition duration-500 ${
+          showBG ? " bg-zinc-900 bg-opacity-75" : ""
+        }`}
+      >
         <div className="relative flex h-16 items-center justify-between">
-          <img className="h-4 lg:h-7" src="/images/logo.png" alt="logo" />
+          <Link href="/">
+            <img className="h-4 lg:h-7" src="/images/logo.png" alt="logo" />
+          </Link>
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            {currentUser && (
+              <h5 className="mr-2 capitalize">{currentUser?.displayName}</h5>
+            )}
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
@@ -50,9 +61,10 @@ export default function Navbar() {
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <img
-                    alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt="user"
+                    src={currentUser?.photoURL || "/images/default-slate.png"}
                     className="size-8 rounded-full"
+                    referrerPolicy="no-referrer"
                   />
                 </MenuButton>
               </div>
@@ -61,28 +73,33 @@ export default function Navbar() {
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    href="/register"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
-                    Your Profile
-                  </a>
+                    Register
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    href="/login"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
-                    Settings
-                  </a>
+                    Login
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    href="/profile"
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
-                    Sign out
-                  </a>
+                    Profile
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <span className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden cursor-pointer">
+                    Log out
+                  </span>
                 </MenuItem>
               </MenuItems>
             </Menu>
